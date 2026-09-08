@@ -1,0 +1,18 @@
+{
+    "transactions": [
+        {
+            "desc": "Client Web Project",
+            "amount": 5000.0
+        },
+        {
+            "desc": "Web Development",
+            "amount": 15000.0
+        }
+    ],
+    "tasks": [
+        {
+            "task": "Push Latest code to Github",
+            "completed": false
+        }
+    ]
+}

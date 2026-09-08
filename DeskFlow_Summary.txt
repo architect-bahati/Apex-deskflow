@@ -1,0 +1,14 @@
+=========================================
+       APEX DESKFLOW SUMMARY REPORT      
+=========================================
+
+Total Transactions: 1
+Total Cash Volume: KES 5,000.00
+
+--- LEDGER ENTRIES ---
+ • Client Web Project: KES 5,000.00
+
+--- PENDING TASKS ---
+ [ ] Push Latest code to Github
+
+--- COMPLETED TASKS ---

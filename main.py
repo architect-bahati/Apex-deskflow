@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from invoice_generator import create_invoice  # Custom PDF Invoice Generator
 import database
 
 class ApexDeskFlow:
@@ -66,7 +67,11 @@ class ApexDeskFlow:
         export_frame.pack(fill="x", padx=15, pady=10)
 
         btn_export = ttk.Button(export_frame, text="⚡ Export DeskFlow_Summary.txt", command=self.export_report)
-        btn_export.pack(padx=15, pady=15)
+        btn_export.pack(padx=15, pady=5)
+
+        # PDF Invoice Exporter Button
+        btn_pdf_invoice = ttk.Button(export_frame, text="📄 Generate PDF Invoice from Ledger", command=self.generate_pdf_invoice)
+        btn_pdf_invoice.pack(padx=15, pady=5)
 
     def build_ledger_ui(self):
         frame = ttk.LabelFrame(self.ledger_tab, text="Add Transaction (KES)")
@@ -181,6 +186,20 @@ class ApexDeskFlow:
         self.lbl_total_val.config(text=f"Total Recorded Volume: KES {total_val:,.2f}")
         self.lbl_pending_tasks.config(text=f"Pending Tasks: {pending_cnt}")
         self.lbl_done_tasks.config(text=f"Completed Tasks: {done_cnt}")
+
+    def generate_pdf_invoice(self):
+        """Compiles active ledger entries into a PDF invoice."""
+        if not self.db["transactions"]:
+            messagebox.showwarning("No Data", "Please add at least one cash ledger entry to generate an invoice.")
+            return
+
+        try:
+            # Converts ledger records to invoice item tuples: (description, quantity, amount)
+            items = [(t["desc"], 1, t["amount"]) for t in self.db["transactions"]]
+            create_invoice("Valued Client", items, "INV-2001")
+            messagebox.showinfo("Invoice Created", "✅ PDF Invoice successfully compiled and saved!")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to generate invoice PDF: {e}")
 
     def export_report(self):
         try:
